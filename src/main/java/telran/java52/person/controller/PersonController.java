@@ -28,7 +28,7 @@ public class PersonController {
 		return personService.addPerson(personDto);
 	}
 
-	@GetMapping("/id")
+	@GetMapping("/{id}")
 	public PersonDto findPersonById(@PathVariable Integer id) {
 		return personService.findPersonById(id);
 	}
@@ -39,11 +39,11 @@ public class PersonController {
 	}
 	
 	@GetMapping("/ages/{minAge}/{maxAge}")
-	public List<PersonDto> findPersonByAge(@PathVariable LocalDate minAge, @PathVariable LocalDate maxAge) {
-		return personService.findPersonByAge(minAge, maxAge);
+	public List<PersonDto> findPersonByAge(@PathVariable int minAge, @PathVariable int maxAge) {
+	    return personService.findPersonByAge(minAge, maxAge);
 	}
 	
-	@PutMapping("/id/{id}/name/{name}")
+	@PutMapping("/{id}/name/{name}")
 	public PersonDto updateName(@PathVariable Integer id, @PathVariable String name) {
 		return personService.updateName(id, name);
 	}
@@ -53,7 +53,7 @@ public class PersonController {
 		return personService.findPersonByName(name);
 	}
 	
-	@PutMapping("/{id}/adress")
+	@PutMapping("/{id}/address")
 	public PersonDto updateAdress(@PathVariable Integer id, @RequestBody AddressDto addressDto) {
 		return personService.updateAddress(id, addressDto);
 	}

@@ -14,7 +14,7 @@ public interface PersonService {
 
     List<PersonDto> findPersonByCity(String city);
 
-    List<PersonDto> findPersonByAge(LocalDate minAge, LocalDate maxAge);
+    List<PersonDto> findPersonByAge(int minAge, int maxAge);
 
     PersonDto updateName(Integer id, String name);
 
