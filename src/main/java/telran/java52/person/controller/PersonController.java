@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import telran.java52.person.dto.AddresDto;
+import telran.java52.person.dto.AddressDto;
 import telran.java52.person.dto.PersonDto;
 import telran.java52.person.service.PersonService;
 
@@ -54,8 +54,8 @@ public class PersonController {
 	}
 	
 	@PutMapping("/{id}/adress")
-	public PersonDto updateAdress(@PathVariable Integer id, @RequestBody AddresDto addresDto) {
-		return personService.updateAddres(id, addresDto);
+	public PersonDto updateAdress(@PathVariable Integer id, @RequestBody AddressDto addressDto) {
+		return personService.updateAddress(id, addressDto);
 	}
 	
 	@DeleteMapping("/{id}")

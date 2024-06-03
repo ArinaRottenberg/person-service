@@ -9,10 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import telran.java52.person.dao.PersonRepository;
-import telran.java52.person.dto.AddresDto;
+import telran.java52.person.dto.AddressDto;
 import telran.java52.person.dto.PersonDto;
 import telran.java52.person.dto.exceptions.PersonNotFoundException;
-import telran.java52.person.model.Addres;
+import telran.java52.person.model.Address;
 import telran.java52.person.model.Person;
 
 @Service
@@ -33,14 +33,14 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonDto findPersonById(Integer id) {
-        Person person = personRepository.findById(id).orElseThrow(PersonNotFoundException::new);
-        return modelMapper.map(person, PersonDto.class);
-    }
+	public PersonDto findPersonById(Integer id) {
+		Person person = personRepository.findById(id).orElseThrow(PersonNotFoundException::new);
+		return modelMapper.map(person, PersonDto.class);
+	}
 
     @Override
     public List<PersonDto> findPersonByCity(String city) {
-        List<Person> persons = personRepository.findByAddresCity(city);
+        List<Person> persons = personRepository.findByAddressCity(city);
         return persons.stream().map(person -> modelMapper.map(person, PersonDto.class)).toList();
     }
     
@@ -67,10 +67,10 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public PersonDto updateAddres(Integer id, AddresDto addresDto) {
+    public PersonDto updateAddress(Integer id, AddressDto addressDto) {
         Person person = personRepository.findById(id).orElseThrow(PersonNotFoundException::new);
-        Addres address = new Addres(addresDto.getCity(), addresDto.getStreet(), addresDto.getBuilding());
-        person.setAddres(address);
+        Address address = new Address(addressDto.getCity(), addressDto.getStreet(), addressDto.getBuilding());
+        person.setAddress(address);
         personRepository.save(person);
         return modelMapper.map(person, PersonDto.class);
     }

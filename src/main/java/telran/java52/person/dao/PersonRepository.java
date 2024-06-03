@@ -9,7 +9,7 @@ import telran.java52.person.model.Person;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Integer> {
 
-    List<Person> findByAddresCity(String city);
+    List<Person> findByAddressCity(String city);
 
     List<Person> findPersonByBirthDateBetween(LocalDate from, LocalDate to);
     

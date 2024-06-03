@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @EqualsAndHashCode
 @Embeddable
-public class Addres implements Serializable{
+public class Address implements Serializable{
 	private static final long serialVersionUID = -1829969706837334924L;
 	String city;
 	String street;

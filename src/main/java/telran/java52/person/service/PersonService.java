@@ -3,7 +3,7 @@ package telran.java52.person.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import telran.java52.person.dto.AddresDto;
+import telran.java52.person.dto.AddressDto;
 import telran.java52.person.dto.PersonDto;
 
 
@@ -20,7 +20,7 @@ public interface PersonService {
 
     List<PersonDto> findPersonByName(String name);
 
-    PersonDto updateAddres(Integer id, AddresDto addresDto);
+    PersonDto updateAddress(Integer id, AddressDto addressDto);
 
     PersonDto removePerson(Integer id);
 
