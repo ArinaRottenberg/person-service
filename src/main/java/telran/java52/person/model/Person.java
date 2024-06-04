@@ -16,7 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(of = "id")
-@Entity
+@Entity(name = "Citizen")
 public class Person  implements Serializable{
 	private static final long serialVersionUID = -5281344739194533512L;
 	@Id

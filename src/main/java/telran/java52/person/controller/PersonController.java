@@ -1,8 +1,5 @@
 package telran.java52.person.controller;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import telran.java52.person.dto.AddressDto;
+import telran.java52.person.dto.CityPopulationDto;
 import telran.java52.person.dto.PersonDto;
 import telran.java52.person.service.PersonService;
 
@@ -34,28 +32,28 @@ public class PersonController {
 	}
 	
 	@GetMapping("/city/{city}")
-	public List<PersonDto> findPersonByCity(@PathVariable String city) {
-		return personService.findPersonByCity(city);
+	public PersonDto[] findPersonByCity(@PathVariable String city) {
+		return personService.findPersonsByCity(city);
 	}
 	
 	@GetMapping("/ages/{minAge}/{maxAge}")
-	public List<PersonDto> findPersonByAge(@PathVariable int minAge, @PathVariable int maxAge) {
-	    return personService.findPersonByAge(minAge, maxAge);
+	public PersonDto[] findPersonByAge(@PathVariable int minAge, @PathVariable int maxAge) {
+	    return personService.findPersonsBetweenAge(minAge, maxAge);
 	}
 	
 	@PutMapping("/{id}/name/{name}")
 	public PersonDto updateName(@PathVariable Integer id, @PathVariable String name) {
-		return personService.updateName(id, name);
+		return personService.updatePersonName(id, name);
 	}
 	
 	@GetMapping("/name/{name}")
-	public List<PersonDto> findPersonByName(@PathVariable String name) {
-		return personService.findPersonByName(name);
+	public PersonDto[] findPersonByName(@PathVariable String name) {
+		return personService.findPersonsByName(name);
 	}
 	
 	@PutMapping("/{id}/address")
 	public PersonDto updateAdress(@PathVariable Integer id, @RequestBody AddressDto addressDto) {
-		return personService.updateAddress(id, addressDto);
+		return personService.updatePersonAddress(id, addressDto);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -63,7 +61,9 @@ public class PersonController {
 		return personService.removePerson(id);
 	}
 	
-	
-	
+	@GetMapping("/population/city")
+    public Iterable<CityPopulationDto> getCitiesPopulation() {
+        return personService.getCitiesPopulation();
+    }
 	
 }
