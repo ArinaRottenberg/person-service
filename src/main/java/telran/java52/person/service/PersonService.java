@@ -3,9 +3,10 @@ package telran.java52.person.service;
 import java.util.List;
 
 import telran.java52.person.dto.AddressDto;
+import telran.java52.person.dto.ChildDto;
 import telran.java52.person.dto.CityPopulationDto;
+import telran.java52.person.dto.EmployeeDto;
 import telran.java52.person.dto.PersonDto;
-import telran.java52.person.model.Person;
 
 
 public interface PersonService {
@@ -27,9 +28,8 @@ public interface PersonService {
     
     Iterable<CityPopulationDto> getCitiesPopulation();
     
-    List<PersonDto> findAllChildren();
+    ChildDto[] findAllChildren();
 
-    List<PersonDto> findEmployeesBySalary(int minSalary, int maxSalary);
-
+    EmployeeDto[] findEmployeesBySalary(Integer minSalary, Integer maxSalary);
 
 }

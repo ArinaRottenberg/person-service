@@ -1,8 +1,7 @@
 package telran.java52.person.service;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
@@ -24,7 +23,7 @@ import telran.java52.person.model.Person;
 
 @Service
 @RequiredArgsConstructor
-public class PersonServiceImpl implements PersonService, CommandLineRunner{
+public class PersonServiceImpl implements PersonService, CommandLineRunner {
 	final PersonRepository personRepository;
 	final ModelMapper modelMapper;
 	final PersonModelDtoMapper mapper;
@@ -72,17 +71,14 @@ public class PersonServiceImpl implements PersonService, CommandLineRunner{
 	@Transactional(readOnly = true)
 	@Override
 	public PersonDto[] findPersonsByCity(String city) {
-		return personRepository.findByAddressCityIgnoreCase(city)
-				.map(p -> modelMapper.map(p, PersonDto.class))
+		return personRepository.findByAddressCityIgnoreCase(city).map(p -> modelMapper.map(p, PersonDto.class))
 				.toArray(PersonDto[]::new);
 	}
 
 	@Transactional(readOnly = true)
 	@Override
 	public PersonDto[] findPersonsByName(String name) {
-		return personRepository.findByNameIgnoreCase(name)
-				.map(p -> mapper.mapToDto(p))
-				.toArray(PersonDto[]::new);
+		return personRepository.findByNameIgnoreCase(name).map(p -> mapper.mapToDto(p)).toArray(PersonDto[]::new);
 	}
 
 	@Transactional(readOnly = true)
@@ -90,9 +86,7 @@ public class PersonServiceImpl implements PersonService, CommandLineRunner{
 	public PersonDto[] findPersonsBetweenAge(Integer minAge, Integer maxAge) {
 		LocalDate from = LocalDate.now().minusYears(maxAge);
 		LocalDate to = LocalDate.now().minusYears(minAge);
-		return personRepository.findByBirthDateBetween(from, to)
-				.map(p -> mapper.mapToDto(p))
-				.toArray(PersonDto[]::new);
+		return personRepository.findByBirthDateBetween(from, to).map(p -> mapper.mapToDto(p)).toArray(PersonDto[]::new);
 	}
 
 	@Override
@@ -103,30 +97,36 @@ public class PersonServiceImpl implements PersonService, CommandLineRunner{
 	@Transactional
 	@Override
 	public void run(String... args) throws Exception {
-		if(personRepository.count() == 0) {
-			Person person = new Person(1000, "John", LocalDate.of(1985, 3, 11), new Address("Tel Aviv", "Ben Gvirol", 81));
-			Child child = new Child(2000, "Mosche", LocalDate.of(2018, 7, 5), new Address("Ashkelon", "Bar Kohva", 21), "Shalom");
-			Employee employee = new Employee(3000, "Sarah", LocalDate.of(1995, 11, 23), new Address("Rehovot", "Herzl", 7), "Motorola", 20000);
+		if (personRepository.count() == 0) {
+			Person person = new Person(1000, "John", LocalDate.of(1985, 3, 11),
+					new Address("Tel Aviv", "Ben Gvirol", 81));
+			Child child = new Child(2000, "Mosche", LocalDate.of(2018, 7, 5), new Address("Ashkelon", "Bar Kohva", 21),
+					"Shalom");
+			Employee employee = new Employee(3000, "Sarah", LocalDate.of(1995, 11, 23),
+					new Address("Rehovot", "Herzl", 7), "Motorola", 20000);
 			personRepository.save(person);
 			personRepository.save(child);
 			personRepository.save(employee);
 		}
-		
+
 	}
 
 	@Override
-    public List<PersonDto> findAllChildren() {
-        List<Person> children = personRepository.findAllByAgeLessThan(18);
-        return children.stream()
-                .map(mapper::toDto) 
-                .collect(Collectors.toList());
-    }
+	public ChildDto[] findAllChildren() {
+	    return personRepository.findAll()
+	            .stream()
+	            .filter(p -> p instanceof Child)
+	            .map(p -> (ChildDto) mapper.mapToDto(p))
+	            .toArray(ChildDto[]::new);
+	}
 
-    @Override
-    public List<PersonDto> findEmployeesBySalary(int minSalary, int maxSalary) {
-        List<Person> employees = personRepository.findAllBySalaryBetween(minSalary, maxSalary);
-        return employees.stream()
-                .map(mapper::toDto) 
-                .collect(Collectors.toList());
-    }
+
+	@Transactional
+	@Override
+	public EmployeeDto[] findEmployeesBySalary(Integer minSalary, Integer maxSalary) {
+	    return personRepository.findEmployeesBySalary(minSalary, maxSalary)
+	            .map(p -> modelMapper.map(p, EmployeeDto.class))
+	            .toArray(EmployeeDto[]::new);
+	}
+
 }
