@@ -1,5 +1,7 @@
 package telran.java52.person.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,4 +68,13 @@ public class PersonController {
         return personService.getCitiesPopulation();
     }
 	
+	@GetMapping("/children")
+    public List<PersonDto> findAllChildren() {
+        return personService.findAllChildren();
+    }
+
+    @GetMapping("/salary/{min}/{max}")
+    public List<PersonDto> findEmployeesBySalary(@PathVariable int min, @PathVariable int max) {
+        return personService.findEmployeesBySalary(min, max);
+    }
 }

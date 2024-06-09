@@ -23,5 +23,9 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
 
 	@Query ("select new telran.java52.person.dto.CityPopulationDto(p.address.city, count(p)) from Person p group by p.address.city order by count(p)")
 	List<CityPopulationDto> getCitiesPopulation();
-    
+	
+	List<Person> findAllByAgeLessThan(int age);
+	
+    List<Person> findAllBySalaryBetween(int minSalary, int maxSalary);
+
 }

@@ -1,6 +1,8 @@
 package telran.java52.person.service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
@@ -112,5 +114,19 @@ public class PersonServiceImpl implements PersonService, CommandLineRunner{
 		
 	}
 
+	@Override
+    public List<PersonDto> findAllChildren() {
+        List<Person> children = personRepository.findAllByAgeLessThan(18);
+        return children.stream()
+                .map(mapper::toDto) 
+                .collect(Collectors.toList());
+    }
 
+    @Override
+    public List<PersonDto> findEmployeesBySalary(int minSalary, int maxSalary) {
+        List<Person> employees = personRepository.findAllBySalaryBetween(minSalary, maxSalary);
+        return employees.stream()
+                .map(mapper::toDto) 
+                .collect(Collectors.toList());
+    }
 }
